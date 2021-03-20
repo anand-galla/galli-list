@@ -5,9 +5,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import * as featureComponents from './features';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ...featureComponents.components,
   ],
   imports: [
     BrowserModule,
