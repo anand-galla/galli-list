@@ -1,0 +1,35 @@
+.nav-container {
+    width: 100%;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 2px 8px rgb(0 0 0 / 5%);
+    background: #fff;
+    width: 350px !important;
+    border-right: 1px solid #ddd;
+    height: 100%;
+}
+
+.top-section,
+.middle-section {
+    padding: 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.top-section h1 {
+    color: #4bc18b; 
+    margin-bottom: 0;
+    font-size: 40px;
+}
+
+.bottom-section {
+    padding: 40px;
+    div a {
+        margin: 8px 0;
+        text-decoration: none;
+        color: inherit;
+        font-size: 14px;
+        color: #999;
+        font-weight: 700;
+    }
+}
+
+
