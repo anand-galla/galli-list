@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-task.component.scss']
 })
 export class CreateTaskComponent implements OnInit {
-
+  currentDate: Date;
+  title: string = '';
+  description: string = '';
   constructor() { }
 
   ngOnInit(): void {
+    
+  }
+
+  createTask() {
+    alert(this.currentDate);
   }
 
 }

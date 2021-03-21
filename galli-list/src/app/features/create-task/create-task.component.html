@@ -1,5 +1,32 @@
 <div class="create-task-container">
-    <h2>CREATE NEW TASK</h2>
-    <mat-card>Simple card</mat-card>
-   
+    <h2 class="title">CREATE NEW TASK</h2>
+    <mat-card class="p-40">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-6">
+                <mat-label class="label">Title</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="e.g. Take the bins out" [(ngModel)]="title" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-label class="label">Date</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="currentDate" placeholder="Select date" autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>   
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col-md-12">
+                <mat-label class="label">Description</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="e.g. Give food before going out" [(ngModel)]="description" autocomplete="off">
+                </mat-form-field>
+            </div>           
+        </div>
+        <div class="form-row">
+            <button type="button" class="btn" (click)="createTask()">CREATE TASK</button>
+        </div>
+    </mat-card>
 </div>

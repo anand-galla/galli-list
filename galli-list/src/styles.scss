@@ -76,6 +76,10 @@ button {
 .mb-15 { margin-bottom: 15px !important; }
 .mb-20 { margin-bottom: 20px !important; }
 
+.p-40 { padding: 40px !important };
+.pr-20 {
+    padding-right: 20px !important;
+}
 
 .font-size-12 {
     font-size: 12px !important;
@@ -83,4 +87,8 @@ button {
 
 .font-size-14 {
     font-size: 14px !important
+}
+
+.w-100 {
+    width: 100% !important;
 }
