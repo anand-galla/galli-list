@@ -16,3 +16,53 @@ h2 {
     border: 1px solid lightgray;
 }
 
+.material-icons {
+    margin: 0 5px;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.material-icons#delete:hover {
+    color: red;
+    border-color: red;
+    border-width: 2px;
+    font-weight: 700;
+}
+
+.material-icons#check:hover {
+    color: green;
+    border-color: green;
+    border-width: 2px;
+    font-weight: 700;
+}
+
+.material-icons#edit:hover {
+    color: black;
+    border-color: black;
+    border-width: 2px;
+    font-weight: 700;
+}
+
+
+.actions,
+.content {
+    margin-right: 20px;
+}
+
+p {
+    margin-bottom: 0;
+    line-height: 20px;
+}
+
+.mat-card {
+    padding: 12px !important;
+}
+
+.date-section {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
