@@ -14,7 +14,9 @@ export class CreateTaskComponent implements OnInit {
   @Input() tasks: models.Task[];
   taskForm: FormGroup;
 
-  constructor(private localStorageService: sharedServices.LocalStorageService) { }
+  constructor(private localStorageService: sharedServices.LocalStorageService,
+    private notificationService: sharedServices.NotificationService,
+  ) { }
 
   ngOnInit(): void {
     this.buildFormGroup();
@@ -38,10 +40,11 @@ export class CreateTaskComponent implements OnInit {
       this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
         if (data) {
           this.buildFormGroup();
-          alert('Task created successfully.');
+          this.notificationService.show({ type: 'success', message: 'Task created successfully' });
         }
       });
     } else {
+      this.notificationService.show({ type: 'warning', message: 'Please add all the required fields' });
       this.taskForm.markAllAsTouched();
     }
   }

@@ -1,0 +1,17 @@
+<div class="toast-container" *ngIf="toastData && animationState"
+    [@fadeAnimation]="{ value: animationState, params: toastData.animations }" 
+    (@fadeAnimation.done)="onFadeFinished($event)">
+
+    <div class="toast-icon" [style.background-color]="toastData.color">
+        <i class="fa icon" [class]="toastData.iconClass" aria-hidden="true"></i>
+    </div>
+
+    <div class="toast-body-container">
+        <p [style.color]="toastData.color">{{toastData.labelText}}</p>
+        <div [title]="toastData.hideTooltip ? '' : toastData.toolTip || toastData.message" [innerHTML]="toastData.message"></div>
+    </div>
+
+    <div class="toast-action-container">
+        <i class="fal fa-times close-icon" (click)="close()"></i>
+    </div>
+</div>

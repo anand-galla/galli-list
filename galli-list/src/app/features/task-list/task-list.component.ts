@@ -19,7 +19,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   taskSubscription: Subscription;
   taskStatus = models.TaskStatus;
 
-  constructor(private localStorageService: sharedServices.LocalStorageService) { }
+  constructor(private localStorageService: sharedServices.LocalStorageService,
+    private notificationService: sharedServices.NotificationService,
+  ) { }
 
   ngOnInit(): void {
     this.filterTasks(this.tasks);
@@ -36,14 +38,13 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.toDoTasks = tasks.filter(task => task.status === models.TaskStatus.Todo);
     this.completedTasks = tasks.filter(task => task.status === models.TaskStatus.Complete);
     this.inCompleteTasks = tasks.filter(task => task.status === models.TaskStatus.InComplete);
-    console.log(tasks);
   }
 
   updateTaskStatus(identifier: string, status: models.TaskStatus) {
     this.tasks.find(task => task.identifier === identifier).status = status;
     this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
       if (data) {
-        alert('Status updated successfully.');
+        this.notificationService.show({ type: 'success', message: 'Task status updated successfully' });
       }
     });
   }
@@ -52,7 +53,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.tasks = this.tasks.filter(task => task.identifier !== identifier);
     this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
       if (data) {
-        alert('Task removed successfully.');
+        this.notificationService.show({ type: 'success', message: 'Task deleted successfully' });
       }
     });
   }
