@@ -1,88 +1,68 @@
 <div class="" style="margin: 20px 0;">
-    <div class="section">
+    <div class="section" *ngIf="toDoTasks?.length">
         <h2>TO DO</h2>
         <div>
-            <mat-card>
+            <mat-card *ngFor="let task of toDoTasks; let index = index">
                 <div class="d-flex align-items-center">
                     <div class="actions d-flex">
-                        <span class="material-icons" id="check">check</span>
-                        <span class="material-icons" id="delete">clear</span>
+                        <span class="material-icons" id="check" (click)="updateTaskStatus(task.identifier, taskStatus.Complete)">check</span>
+                        <span class="material-icons" id="delete" (click)="updateTaskStatus(task.identifier, taskStatus.InComplete)">clear</span>
                         <span class="material-icons" id="edit">edit</span>
-                        <span class="material-icons" id="delete">delete_outline</span>
+                        <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
                     </div>
                     <div class="content">
-                        <p style="margin-bottom: 10px;">New task created New task createdNew task createdNew task createdNew task createdNew task createdNew task createdNew task createdNew task createdNew task created</p>
-                        <span style="color: lightgray;">Description: This is the description checking the UI how it look</span>
+                        <p [class.mb-5]="task.description?.length">{{task.title}}</p>
+                        <span *ngIf="task.description?.length" style="color: lightgray;">Description: {{task.description}}</span>
                     </div>
                     
                     <div class="date-section">
-                        <p class="text-danger" style="margin-bottom: 0;">Saturday 21st April</p>
-                    </div>
-                </div>
-            </mat-card>
-            <mat-card>
-                <div class="d-flex align-items-center">
-                    <div class="actions d-flex">
-                        <span class="material-icons">check</span>
-                        <span class="material-icons">clear</span>
-                        <span class="material-icons">edit</span>
-                        <span class="material-icons">delete_outline</span>
-                    </div>
-                    <div class="content">
-                        <p style="margin-bottom: 8px;">New task created New task c</p>
-                        <span style="color: lightgray;">Description: This is the description checking the UI how it look</span>
-                    </div>
-                    
-                    <div class="date-section">
-                        <p>Saturday 21st April</p>
+                        <p style="margin-bottom: 0;">{{task.date | date : 'EEEE, MMMM d'}}</p>
                     </div>
                 </div>
             </mat-card>
         </div>
     </div>
-    <div class="section">
+    <div class="section" *ngIf="completedTasks && completedTasks.length">
         <h2>COMPLETE</h2>
         <div>
-            <mat-card>
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <div class="actions d-flex">
-                            <span class="material-icons">check</span>
-                            <span class="material-icons">clear</span>
-                            <span class="material-icons">edit</span>
-                            <span class="material-icons">delete_outline</span>
-                        </div>
-                        <div class="content">
-                            <p>New task created New task c</p>
-                        </div>
+            <mat-card *ngFor="let task of completedTasks; let index = index">
+                <div class="d-flex align-items-center">
+                    <div class="actions d-flex">
+                        <span class="material-icons" id="check" (click)="updateTaskStatus(task.identifier, taskStatus.Complete)">check</span>
+                        <span class="material-icons" id="delete" (click)="updateTaskStatus(task.identifier, taskStatus.InComplete)">clear</span>
+                        <span class="material-icons" id="edit">edit</span>
+                        <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
+                    </div>
+                    <div class="content">
+                        <p [class.mb-5]="task.description?.length">{{task.title}}</p>
+                        <span *ngIf="task.description?.length" style="color: lightgray;">Description: {{task.description}}</span>
                     </div>
                     
-                    <div class="date-section d-flex justify-content-end">
-                        <p>Saturday 21st April</p>
+                    <div class="date-section">
+                        <p style="margin-bottom: 0;">{{task.date | date : 'EEEE, MMMM d'}}</p>
                     </div>
                 </div>
             </mat-card>
         </div>
     </div>
-    <div class="section">
+    <div class="section" *ngIf="inCompleteTasks?.length">
         <h2>INCOMPLETE</h2>
         <div>
-            <mat-card>
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <div class="actions d-flex">
-                            <span class="material-icons">check</span>
-                            <span class="material-icons">clear</span>
-                            <span class="material-icons">edit</span>
-                            <span class="material-icons">delete_outline</span>
-                        </div>
-                        <div class="content">
-                            <p>New task created New task createdNew task createdNew task createdNew task createdNew task createdNew task createdNew task createdNew task createdNew task created</p>
-                        </div>
+            <mat-card *ngFor="let task of inCompleteTasks; let index = index">
+                <div class="d-flex align-items-center">
+                    <div class="actions d-flex">
+                        <span class="material-icons" id="check" (click)="updateTaskStatus(task.identifier, taskStatus.Complete)">check</span>
+                        <span class="material-icons" id="delete" (click)="updateTaskStatus(task.identifier, taskStatus.InComplete)">clear</span>
+                        <span class="material-icons" id="edit">edit</span>
+                        <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
+                    </div>
+                    <div class="content">
+                        <p [class.mb-5]="task.description?.length">{{task.title}}</p>
+                        <span *ngIf="task.description?.length" style="color: lightgray;">Description: {{task.description}}</span>
                     </div>
                     
-                    <div class="date-section d-flex justify-content-end">
-                        <p class="text-danger">Saturday 21st April</p>
+                    <div class="date-section">
+                        <p style="margin-bottom: 0;">{{task.date | date : 'EEEE, MMMM d'}}</p>
                     </div>
                 </div>
             </mat-card>

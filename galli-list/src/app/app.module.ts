@@ -31,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

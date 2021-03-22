@@ -1,6 +1,6 @@
 <div class="home-container p-40">
     <div style="margin: 40px 0">
-        <app-create-task></app-create-task>
+        <app-create-task [tasks]="tasks"></app-create-task>
     </div>
-    <app-task-list></app-task-list>
+    <app-task-list [tasks]="tasks"></app-task-list>
 </div>
