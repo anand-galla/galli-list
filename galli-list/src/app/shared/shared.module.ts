@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { RouterModule } from '@angular/router';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +29,7 @@ import * as sharedComponents from './components';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    RouterModule,
   ],
 })
 export class SharedModule { }

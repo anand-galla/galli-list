@@ -16,7 +16,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
   completedTasks: models.Task[];
   inCompleteTasks: models.Task[];
 
-  taskSubscription: Subscription;
   taskStatus = models.TaskStatus;
 
   constructor(private localStorageService: sharedServices.LocalStorageService,
@@ -60,6 +59,5 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.taskSubscription.unsubscribe();
   }
 }

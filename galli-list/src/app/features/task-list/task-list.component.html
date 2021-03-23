@@ -53,7 +53,7 @@
                     <div class="actions d-flex">
                         <span class="material-icons" id="check" (click)="updateTaskStatus(task.identifier, taskStatus.Complete)">check</span>
                         <span class="material-icons" id="delete" (click)="updateTaskStatus(task.identifier, taskStatus.InComplete)">clear</span>
-                        <span class="material-icons" id="edit">edit</span>
+                        <a class="cursor-pointer edit-icon" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
                         <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
                     </div>
                     <div class="content">

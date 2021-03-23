@@ -59,7 +59,7 @@ button {
     -webkit-font-smoothing: antialiased;
 }
 
-.main-container {
+.body-container {
     min-height: 100%;
     display: flex;
 }
@@ -92,4 +92,11 @@ button {
 
 .w-100 {
     width: 100% !important;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1280px;
+    margin-right: auto;
+    margin-left: auto;
 }
