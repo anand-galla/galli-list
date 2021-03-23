@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.localStorageChanges$.subscribe((data: any) => {
       if (data?.key == 'tasks') {
         this.tasks = data?.value || [];
-        console.log(this.tasks);
       }
     });
   }

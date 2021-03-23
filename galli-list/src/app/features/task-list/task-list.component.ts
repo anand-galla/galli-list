@@ -21,6 +21,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   constructor(private localStorageService: sharedServices.LocalStorageService,
     private notificationService: sharedServices.NotificationService,
+    private snackBarService: sharedServices.SnackBarService,
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.tasks.find(task => task.identifier === identifier).status = status;
     this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
       if (data) {
-        this.notificationService.show({ type: 'success', message: 'Task status updated successfully' });
+        this.snackBarService.show('Task status updated', 'Status Update', 2000);
       }
     });
   }
@@ -53,7 +54,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.tasks = this.tasks.filter(task => task.identifier !== identifier);
     this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
       if (data) {
-        this.notificationService.show({ type: 'success', message: 'Task deleted successfully' });
+        this.snackBarService.show('Task deleted', 'Delete', 2000);
       }
     });
   }

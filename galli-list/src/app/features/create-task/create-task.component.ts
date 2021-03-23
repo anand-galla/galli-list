@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 
 import * as models from '../../models';
@@ -16,6 +16,7 @@ export class CreateTaskComponent implements OnInit {
 
   constructor(private localStorageService: sharedServices.LocalStorageService,
     private notificationService: sharedServices.NotificationService,
+    private snackBarService: sharedServices.SnackBarService,
   ) { }
 
   ngOnInit(): void {
@@ -40,11 +41,10 @@ export class CreateTaskComponent implements OnInit {
       this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
         if (data) {
           this.buildFormGroup();
-          this.notificationService.show({ type: 'success', message: 'Task created successfully' });
+          this.snackBarService.show('Task created', 'Create', 2000);
         }
       });
     } else {
-      this.notificationService.show({ type: 'warning', message: 'Please add all the required fields' });
       this.taskForm.markAllAsTouched();
     }
   }
