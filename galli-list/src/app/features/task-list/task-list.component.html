@@ -7,11 +7,11 @@
                     <div class="actions d-flex">
                         <span class="material-icons" id="check" (click)="updateTaskStatus(task.identifier, taskStatus.Complete)">check</span>
                         <span class="material-icons" id="delete" (click)="updateTaskStatus(task.identifier, taskStatus.InComplete)">clear</span>
-                        <span class="material-icons" id="edit">edit</span>
+                        <a class="cursor-pointer edit-icon" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
                         <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
                     </div>
                     <div class="content">
-                        <p [class.mb-5]="task.description?.length">{{task.title}}</p>
+                        <p [class.mb-5]="task.description?.length" class="text-truncate-2">{{task.title}}</p>
                         <span *ngIf="task.description?.length" style="color: lightgray;">Description: {{task.description}}</span>
                     </div>
                     
@@ -30,11 +30,11 @@
                     <div class="actions d-flex">
                         <span class="material-icons" id="check" (click)="updateTaskStatus(task.identifier, taskStatus.Complete)">check</span>
                         <span class="material-icons" id="delete" (click)="updateTaskStatus(task.identifier, taskStatus.InComplete)">clear</span>
-                        <span class="material-icons" id="edit">edit</span>
+                        <a class="cursor-pointer edit-icon" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
                         <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
                     </div>
                     <div class="content">
-                        <p [class.mb-5]="task.description?.length">{{task.title}}</p>
+                        <p [class.mb-5]="task.description?.length" class="text-truncate-2">{{task.title}}</p>
                         <span *ngIf="task.description?.length" style="color: lightgray;">Description: {{task.description}}</span>
                     </div>
                     
@@ -57,7 +57,7 @@
                         <span class="material-icons" id="delete" (click)="removeTask(task.identifier)">delete_outline</span>
                     </div>
                     <div class="content">
-                        <p [class.mb-5]="task.description?.length">{{task.title}}</p>
+                        <p [class.mb-5]="task.description?.length" class="text-truncate-2" [title]="task.title">{{task.title}}</p>
                         <span *ngIf="task.description?.length" style="color: lightgray;">Description: {{task.description}}</span>
                     </div>
                     

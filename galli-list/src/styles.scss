@@ -29,8 +29,7 @@ $galli-list-theme: mat-light-theme($galli-list-primary, $galli-list-accent, $gal
 /* You can add global styles to this file, and also import other style files */
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: proxima-nova, sans-serif; }
 
 html,
 body {
@@ -42,7 +41,7 @@ body,
 input,
 textarea,
 button {
-    font-family: "DM Sans",sans-serif;
+    font-family: proxima-nova, sans-serif;
     font-size: 16px;
     color: #4c4c4c;
 }
@@ -75,6 +74,8 @@ button {
 .mb-15 { margin-bottom: 15px !important; }
 .mb-20 { margin-bottom: 20px !important; }
 
+.mv-40 { margin: 40px 0 !important; }
+
 .p-40 { padding: 40px !important };
 .pr-20 {
     padding-right: 20px !important;
@@ -99,4 +100,18 @@ button {
     max-width: 1280px;
     margin-right: auto;
     margin-left: auto;
+}
+
+.text-truncate-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

@@ -50,12 +50,14 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   removeTask(identifier: string) {
-    this.tasks = this.tasks.filter(task => task.identifier !== identifier);
-    this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
-      if (data) {
-        this.snackBarService.show('Task deleted', 'Delete', 2000);
-      }
-    });
+    if (confirm('Are you sure you want to delete the task?')) {
+      this.tasks = this.tasks.filter(task => task.identifier !== identifier);
+      this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
+        if (data) {
+          this.snackBarService.show('Task deleted', 'Delete', 2000);
+        }
+      });
+    }    
   }
 
   ngOnDestroy() {

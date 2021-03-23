@@ -1,5 +1,5 @@
 <div [ngClass]="{ 'main-container p-40': taskIdentifier }">
-    <div class="create-task-container">
+    <div class="create-task-container" [class.mv-40]="taskIdentifier">
         <h2 class="title" *ngIf="!taskIdentifier?.length">CREATE NEW TASK</h2>
         <h2 class="title" *ngIf="taskIdentifier?.length">EDIT TASK</h2>
         <mat-card class="p-40" *ngIf="taskForm">
