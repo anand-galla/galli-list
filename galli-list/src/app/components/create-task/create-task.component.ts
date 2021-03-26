@@ -71,7 +71,7 @@ export class CreateTaskComponent implements OnInit {
       this.task.description = formValue.description;
       this.task.date = formValue.date;
 
-      this.taskService.updateTask(this.task.identifier, this.task).then((data) => {
+      this.taskService.updateTask(this.task.identifier, formValue).then((data) => {
         console.log(data);
         this.snackBarService.show('Task updated', 'Update', 2000);
       }).catch((error) => console.log(error));

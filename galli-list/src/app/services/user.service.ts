@@ -9,7 +9,9 @@ export class UserService {
 
   constructor(public fireService: AngularFirestore) { }
 
-  createUser(uId: string, user: any) {
-    this.fireService.collection(this.collectionName).doc(uId).set({ ...user });
+  createUser(uid: string, user: any) {
+    user.uid = uid;
+   
+    this.fireService.collection(this.collectionName).doc(uid).set({ ...user });
   }
 }

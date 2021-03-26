@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import * as models from '../../../models';
 import * as services from '../../../services';
@@ -15,6 +16,7 @@ export class SingupComponent implements OnInit {
 
   constructor(private authenticationService: services.AuthenticationService,
     private snackBarService: sharedServices.SnackBarService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class SingupComponent implements OnInit {
       });
 
       this.authenticationService.singUp(user, formValue.password).then((res) => {
+        this.router.navigate(['/tasks']);
         this.snackBarService.show('New user created', 'User', 2000);
       }, (error) => console.log(error));
     } else {

@@ -7,7 +7,7 @@
                     <div class="actions d-flex">
                         <span class="material-icons" id="check" (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
                         <span class="material-icons" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
-                        <a class="cursor-pointer edit-icon" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
+                        <a class="cursor-pointer edit-icon" routerLink="/tasks/edit/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
                         <span class="material-icons" id="delete" (click)="removeTask(task)">delete_outline</span>
                     </div>
                     <div class="content">
@@ -30,7 +30,7 @@
                     <div class="actions d-flex">
                         <span class="material-icons border-green color-green" id="check"  (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
                         <span class="material-icons" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
-                        <a class="cursor-pointer edit-icon" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
+                        <a class="cursor-pointer edit-icon" routerLink="/tasks/edit/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
                         <span class="material-icons" id="delete" (click)="removeTask(task)">delete_outline</span>
                     </div>
                     <div class="content">

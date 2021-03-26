@@ -7,6 +7,7 @@ import firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
 
 import * as models from '../models';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,14 @@ export class TaskService {
 
   taskList: AngularFireList<any>;
 
-  constructor(public fireService: AngularFirestore) { }
+  constructor(public fireService: AngularFirestore, private authService: AuthenticationService) { }
 
   createTask(task: models.Task) {
+    task.uid = this.authService.userId;
+    Object.assign(task, {
+      'dateCreated': new Date(),            
+    });
+    
     return this.fireService.collection(this.collectionName).add({...task});
   }
 
@@ -27,7 +33,7 @@ export class TaskService {
               .collection(this.collectionName)
               .doc(identifier)
               .snapshotChanges()
-              .pipe(map(item => this.processFirestoreObject(item)));
+              .pipe(map(item => this.processFirestoreObject(item.payload)));
   }
 
   getTasks() {
@@ -35,11 +41,16 @@ export class TaskService {
               .collection(this.collectionName)
               .snapshotChanges()
               .pipe(map(changes => {
-                return changes.map(item => this.processFirestoreObject(item));
+                changes = changes.filter(change => (change.payload.doc.data() as any).uid === this.authService.userId)
+                return changes.map(item => this.processFirestoreObject(item.payload.doc));
               }));
   }
 
   updateTask(identifier: string, task: models.Task) {
+    Object.assign(task, {
+      'dateUpdated': new Date(),            
+    });
+
     return this.fireService.collection(this.collectionName).doc(identifier).update(task);
   }
 
@@ -47,10 +58,10 @@ export class TaskService {
     return this.fireService.collection(this.collectionName).doc(identifier).delete();
   }
 
-  private processFirestoreObject(object: any) {
-    const data = object.payload.doc.data() as any;
+  private processFirestoreObject(docObject: any) {
+    const data = docObject.data() as any;
     Object.keys(data).filter((key) => data[key] instanceof Timestamp).forEach(key => data[key] = data[key].toDate())
-    data.identifier = object.payload.doc.id;
+    data.identifier = docObject.id;
     return data;
   }
 }
