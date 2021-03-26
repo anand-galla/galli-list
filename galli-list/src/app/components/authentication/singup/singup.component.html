@@ -1,19 +1,33 @@
 <div class="main-container p-40">
     <div class="create-task-container">
-        <h2 class="title">SING UP</h2>
+        <h2 class="title">CREATE NEW ACCOUNT</h2>
         <mat-card class="p-40" *ngIf="singUpForm">
             <div [formGroup]="singUpForm">
                 <div class="row d-flex align-items-center">
                     <div class="col-md-6">
+                        <mat-label class="label">First Name</mat-label>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <input matInput formControlName="firstName" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-label class="label">Last Name</mat-label>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <input matInput formControlName="lastName" autocomplete="off">
+                        </mat-form-field>   
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6">
                         <mat-label class="label">Email</mat-label>
                         <mat-form-field appearance="outline" class="w-100">
-                            <input matInput placeholder="xyz@gmail.com" formControlName="email" autocomplete="off">
+                            <input matInput formControlName="email" autocomplete="off">
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
                         <mat-label class="label">Password</mat-label>
                         <mat-form-field appearance="outline" class="w-100">
-                            <input matInput formControlName="password" placeholder="Password" autocomplete="off">
+                            <input type="password" matInput formControlName="password" autocomplete="off">
                         </mat-form-field>   
                     </div>
                 </div>
@@ -21,7 +35,7 @@
             </div>
             
             <div class="form-row">
-                <button type="button" class="btn" (click)="signUp()">SING UP</button>
+                <button type="button" class="btn" (click)="signUp()">CREATE</button>
             </div>
         </mat-card>
     </div>

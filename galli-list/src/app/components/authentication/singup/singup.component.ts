@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { FirebaseService } from 'src/app/services';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import * as models from '../../../models';
+import * as services from '../../../services';
+import * as sharedServices from '../../../shared';
 
 @Component({
   selector: 'app-singup',
@@ -10,7 +13,9 @@ import { FirebaseService } from 'src/app/services';
 export class SingupComponent implements OnInit {
   singUpForm: FormGroup;
 
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private authenticationService: services.AuthenticationService,
+    private snackBarService: sharedServices.SnackBarService,
+  ) { }
 
   ngOnInit(): void {
     this.buildLogInForm();
@@ -18,16 +23,27 @@ export class SingupComponent implements OnInit {
 
   buildLogInForm() {
     this.singUpForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     });
   }
 
-  async signUp() {
-    await this.firebaseService.signUp(this.singUpForm.value.email, this.singUpForm.value.password);
-    if (this.firebaseService.isLoggedIn) {
-      alert('User created Successfull');
+  signUp() {
+    if (this.singUpForm.valid) {
+      const formValue = this.singUpForm.value;
+      const user = new models.User({
+        firstName: formValue.firstName,
+        lastName: formValue.lastName,
+        email: formValue.email
+      });
+
+      this.authenticationService.singUp(user, formValue.password).then((res) => {
+        this.snackBarService.show('New user created', 'User', 2000);
+      }, (error) => console.log(error));
+    } else {
+      this.singUpForm.markAllAsTouched();
     }
   }
-
 }

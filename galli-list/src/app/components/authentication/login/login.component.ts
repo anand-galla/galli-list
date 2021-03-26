@@ -1,8 +1,8 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { FirebaseService } from 'src/app/services';
+import * as services from '../../../services';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   logInForm: FormGroup;
 
-  constructor(private firebaseService: FirebaseService,
+  constructor(private authenticationService: services.AuthenticationService,
     private router: Router,
   ) { }
 
@@ -28,10 +28,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async logIn() {
-    await this.firebaseService.signIn(this.logInForm.value.email, this.logInForm.value.password);
-    if (this.firebaseService.isLoggedIn) {
+  logIn() {
+    this.authenticationService.signIn(this.logInForm.value.email, this.logInForm.value.password).then(() => {
       this.router.navigate(['../']);
-    }
+    });
   }
 }

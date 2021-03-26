@@ -8,24 +8,9 @@ import * as models from '../../models';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  localStorageChanges$ = this.localStorageService.changes$;
-  tasks: models.Task[] = [];
 
-  constructor(private localStorageService: sharedServices.LocalStorageService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getTasks();
-    
-    this.localStorageChanges$.subscribe((data: any) => {
-      if (data?.key == 'tasks') {
-        this.tasks = data?.value || [];
-      }
-    });
-  }
-
-  getTasks() {
-    this.localStorageService.get('tasks').subscribe((data) => {
-      this.tasks = data?.map(d => new models.Task(d)) || [];
-    });
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import * as sharedServices from 'src/app/shared/services';
-import { FirebaseService } from 'src/app/services';
+import * as services from '../../../services';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,27 +13,14 @@ export class NavBarComponent implements OnInit {
 
   isUserLoggedIn: boolean;
 
-  constructor(private localStorageService: sharedServices.LocalStorageService,
-    private firebaseService: FirebaseService,
-  ) {
-    this.localStorageService.get('user').subscribe((data) => {
-      if (data) {
-        this.isUserLoggedIn = true;
-      } else {
-        this.isUserLoggedIn = false;
-      }
-    })
-   }
+  constructor(private authenticationServicce: services.AuthenticationService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    this.localStorageService.changes$.subscribe((data: any) => {
-      if (data?.key == 'user' && data.value) {
-        this.isUserLoggedIn = true;
-      }
-    });
   }
 
-  logOut() {
-    this.firebaseService.logOut();
+  singOut() {
+    this.authenticationServicce.signOut().then(() => this.router.navigate(['../'])).catch((error) => console.log(error));
   }
 }

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Guid } from 'guid-typescript';
 
 import * as models from '../../models';
 import * as services from '../../services';
@@ -17,7 +16,6 @@ export class CreateTaskComponent implements OnInit {
   task: models.Task;
 
   constructor(private taskService: services.TaskService,
-    private notificationService: sharedServices.NotificationService,
     private snackBarService: sharedServices.SnackBarService,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -31,8 +29,7 @@ export class CreateTaskComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-   
+  ngOnInit(): void {   
   }
 
   buildTaskForm(task?: models.Task) {
@@ -78,52 +75,8 @@ export class CreateTaskComponent implements OnInit {
         console.log(data);
         this.snackBarService.show('Task updated', 'Update', 2000);
       }).catch((error) => console.log(error));
+    } else {
+      this.taskForm.markAllAsTouched();
     }
   }
-
-  // getTask(identifier: string) {
-  //   this.localStorageService.get('tasks').subscribe((data) => {
-  //     this.tasks = data || [];
-  //     // this.task = this.tasks.find(task => task.identifier === identifier);
-  //     this.buildFormGroup(this.task);
-  //   });
-  // }
-
-
-
-  // createTask() {
-  //   if (this.taskForm.valid) {
-  //     const task = new models.Task(this.taskForm.value);
-  //     // task.identifier = Guid.create().toString();
-  //     task.status = models.TaskStatus.Todo;
-  //     this.tasks.push(task);
-  //     this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
-  //       if (data) {
-  //         this.buildFormGroup();
-  //         this.snackBarService.show('Task created', 'Create', 2000);
-  //       }
-  //     });
-  //   } else {
-  //     this.taskForm.markAllAsTouched();
-  //   }
-  // }
-
-  // updateTask() {
-  //   if (this.taskForm.valid) {
-  //     const formValue = this.taskForm.value;
-  //     this.task.title = formValue.title;
-  //     this.task.description = formValue.description;
-  //     this.task.date = formValue.date;
-
-  //     // const taskIndex = this.tasks.findIndex(task => task.identifier === this.taskIdentifier);
-  //     // this.tasks[taskIndex] = this.task;
-  //     this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
-  //       if (data) {
-  //         this.snackBarService.show('Task updated', 'Create', 2000);
-  //       }
-  //     });
-  //   } else {
-  //     this.taskForm.markAllAsTouched();
-  //   }
-  // }
 }

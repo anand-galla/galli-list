@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import * as models from '../../models';
@@ -18,9 +18,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   inCompleteTasks: models.Task[];
 
   taskStatus = models.TaskStatus;
+  taskSubscription: Subscription;
 
   constructor(private taskService: services.TaskService,
-    private notificationService: sharedServices.NotificationService,
     private snackBarService: sharedServices.SnackBarService,
   ) { }
 
@@ -29,10 +29,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   getTasks() {
-    this.taskService.getTasks().subscribe((data) => {
+    this.taskSubscription = this.taskService.getTasks().subscribe((data) => {
       this.tasks = data?.map(d => new models.Task(d));
       this.filterTasks(data);
-      console.log(this.tasks);
     });
   }
 
@@ -58,5 +57,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.taskSubscription?.unsubscribe();
   }
 }
