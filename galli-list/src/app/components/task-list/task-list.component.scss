@@ -25,7 +25,8 @@ h2 {
     cursor: pointer;
 }
 
-.material-icons#delete:hover {
+.material-icons#delete:hover,
+.material-icons#clear:hover {
     color: red;
     border-color: red;
     border-width: 2px;

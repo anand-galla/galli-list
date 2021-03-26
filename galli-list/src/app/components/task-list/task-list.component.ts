@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import * as models from '../../models';
+import * as services from '../../services';
 import * as sharedServices from '../../shared/services';
 
 @Component({
@@ -10,7 +11,7 @@ import * as sharedServices from '../../shared/services';
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit, OnDestroy {
-  @Input() tasks: models.Task[];
+  tasks: models.Task[];
 
   toDoTasks: models.Task[];
   completedTasks: models.Task[];
@@ -18,19 +19,20 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   taskStatus = models.TaskStatus;
 
-  constructor(private localStorageService: sharedServices.LocalStorageService,
+  constructor(private taskService: services.TaskService,
     private notificationService: sharedServices.NotificationService,
     private snackBarService: sharedServices.SnackBarService,
   ) { }
 
   ngOnInit(): void {
-    this.filterTasks(this.tasks);
+    this.getTasks();
+  }
 
-    this.localStorageService.changes$.subscribe((data: any) => {
-      if (data.key === 'tasks') {
-        this.tasks = data.value;
-        this.filterTasks(this.tasks);
-      }
+  getTasks() {
+    this.taskService.getTasks().subscribe((data) => {
+      this.tasks = data?.map(d => new models.Task(d));
+      this.filterTasks(data);
+      console.log(this.tasks);
     });
   }
 
@@ -40,23 +42,16 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.inCompleteTasks = tasks.filter(task => task.status === models.TaskStatus.InComplete);
   }
 
-  updateTaskStatus(identifier: string, status: models.TaskStatus) {
-    this.tasks.find(task => task.identifier === identifier).status = status;
-    this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
-      if (data) {
-        this.snackBarService.show('Task status updated', 'Status Update', 2000);
-      }
-    });
+  updateTaskStatus(task: models.Task, status: models.TaskStatus) {
+    task.status = status;
+    this.taskService.updateTask(task.identifier, task).then((data) => this.snackBarService.show('Status updated', 'Update', 2000))
+          .catch((error) => console.log(error));
   }
 
-  removeTask(identifier: string) {
+  removeTask(task: models.Task) {
     if (confirm('Are you sure you want to delete the task?')) {
-      this.tasks = this.tasks.filter(task => task.identifier !== identifier);
-      this.localStorageService.set('tasks', this.tasks).subscribe((data) => {
-        if (data) {
-          this.snackBarService.show('Task deleted', 'Delete', 2000);
-        }
-      });
+      this.taskService.removeTask(task.identifier).then(() => this.snackBarService.show('Task removed', 'Delete', 2000))
+          .catch((error) => console.log(error));
     }    
   }
 

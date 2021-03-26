@@ -1,15 +1,13 @@
-import { SingupComponent } from './authentication/singup/singup.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CreateTaskComponent, HomeComponent } from './features';
-import { LoginComponent } from './authentication';
+import * as components from './components';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'edit/task/:id', component: CreateTaskComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SingupComponent },
+  { path: '', component: components.HomeComponent },
+  { path: 'edit/task/:id', component: components.CreateTaskComponent },
+  { path: 'login', component: components.LoginComponent },
+  { path: 'signup', component: components.SingupComponent },
   { path: '**', redirectTo: '' }
 ];
 

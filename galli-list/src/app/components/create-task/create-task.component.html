@@ -1,7 +1,7 @@
-<div [ngClass]="{ 'main-container p-40': taskIdentifier }">
-    <div class="create-task-container" [class.mv-40]="taskIdentifier">
-        <h2 class="title" *ngIf="!taskIdentifier?.length">CREATE NEW TASK</h2>
-        <h2 class="title" *ngIf="taskIdentifier?.length">EDIT TASK</h2>
+<div [ngClass]="{ 'main-container p-40': task }">
+    <div class="create-task-container" [class.mv-40]="task">
+        <h2 class="title" *ngIf="!task">CREATE NEW TASK</h2>
+        <h2 class="title" *ngIf="task">EDIT TASK</h2>
         <mat-card class="p-40" *ngIf="taskForm">
             <div [formGroup]="taskForm">
                 <div class="row d-flex align-items-center">
@@ -31,8 +31,8 @@
             </div>
             
             <div class="form-row">
-                <button type="button" class="btn" (click)="createTask()" *ngIf="!taskIdentifier?.length">CREATE TASK</button>
-                <button type="button" class="btn" (click)="updateTask()" *ngIf="taskIdentifier?.length">SAVE CHANGES</button>
+                <button type="button" class="btn" (click)="createTask()" *ngIf="!task">CREATE TASK</button>
+                <button type="button" class="btn" (click)="updateTask()" *ngIf="task">SAVE CHANGES</button>
             </div>
         </mat-card>
     </div>

@@ -1,8 +1,8 @@
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { FirebaseService } from './../../services';
 import { Router } from '@angular/router';
+import { FirebaseService } from 'src/app/services';
 
 @Component({
   selector: 'app-login',
