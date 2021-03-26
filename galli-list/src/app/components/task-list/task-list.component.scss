@@ -47,6 +47,26 @@ h2 {
     font-weight: 700;
 }
 
+.complete {
+    .mat-card { border-color: green; }
+    .material-icons#check {
+        color: green;
+        border-color: green;
+        border-width: 2px;
+        font-weight: 700;
+    }
+}
+
+.incomplete {
+    .mat-card { border-color: red; }
+    .material-icons#clear {
+        color: red;
+        border-color: red;
+        border-width: 2px;
+        font-weight: 700;
+    }
+}
+
 
 .actions,
 .content {
@@ -71,4 +91,6 @@ p {
 .edit-icon {
     color: black;
 }
+
+
 

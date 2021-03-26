@@ -43,9 +43,11 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   updateTaskStatus(task: models.Task, status: models.TaskStatus) {
-    task.status = status;
-    this.taskService.updateTask(task.identifier, task).then((data) => this.snackBarService.show('Status updated', 'Update', 2000))
-          .catch((error) => console.log(error));
+    if (task.status !== status) {
+      task.status = status;
+      this.taskService.updateTask(task.identifier, task).then((data) => this.snackBarService.show('Status updated', 'Update', 2000))
+            .catch((error) => console.log(error));
+    }    
   }
 
   removeTask(task: models.Task) {
