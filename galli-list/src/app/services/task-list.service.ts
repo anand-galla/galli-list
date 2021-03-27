@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import firebase from 'firebase/app';
+import Timestamp = firebase.firestore.Timestamp;
 
 import * as models from '../models';
-import * as sharedServices from '../shared/services';
 
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
@@ -18,7 +19,6 @@ export class TaskListService {
 
   constructor(private fireService: AngularFirestore, 
     private authService: AuthenticationService,
-    private utilityService: sharedServices.UtilityService,
     private router: Router,
   ) { }
 
@@ -40,12 +40,19 @@ export class TaskListService {
         return !data.isDeleted && data.uid === this.authService.userId;
       });
       
-      changes = changes.map(item => this.utilityService.processFirestoreObject(item.payload.doc));
+      changes = changes.map(item => this.processFirestoreObject(item.payload.doc));
       return changes.sort((a : any, b: any) => a.dateCreated - b.dateCreated) as any[];
     }));
   }
 
   removeTaskList(identifier: string) {
     return this.fireService.collection(this.taskListName).doc(identifier).update({ isDeleted: true });
+  }
+
+  private processFirestoreObject(docObject: any) {
+    const data = docObject.data() as any;
+    Object.keys(data).filter((key) => data[key] instanceof Timestamp).forEach(key => data[key] = data[key].toDate())
+    data.identifier = docObject.id;
+    return data;
   }
 }

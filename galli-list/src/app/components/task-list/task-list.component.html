@@ -5,10 +5,10 @@
             <mat-card *ngFor="let task of toDoTasks; let index = index">
                 <div class="d-flex align-items-center">
                     <div class="actions d-flex">
-                        <span class="material-icons" id="check" (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
-                        <span class="material-icons" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
-                        <a class="cursor-pointer edit-icon" routerLink="/tasks/edit/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
-                        <span class="material-icons" id="delete" (click)="removeTask(task)">delete_outline</span>
+                        <span class="material-icons" matTooltip="Complete" id="check" (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
+                        <span class="material-icons" matTooltip="In Complete" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
+                        <a class="cursor-pointer edit-icon" matTooltip="Edit" routerLink="/tasks/edit/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
+                        <span class="material-icons" matTooltip="Delete" id="delete" (click)="removeTask(task)">delete_outline</span>
                     </div>
                     <div class="content">
                         <p [class.mb-5]="task.description?.length" class="text-truncate-2">{{task.title}}</p>
@@ -28,10 +28,10 @@
             <mat-card *ngFor="let task of completedTasks; let index = index" class="border-green">
                 <div class="d-flex align-items-center">
                     <div class="actions d-flex">
-                        <span class="material-icons border-green color-green" id="check"  (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
-                        <span class="material-icons" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
-                        <a class="cursor-pointer edit-icon" routerLink="/tasks/edit/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
-                        <span class="material-icons" id="delete" (click)="removeTask(task)">delete_outline</span>
+                        <span class="material-icons border-green color-green"  matTooltip="Complete" id="check"  (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
+                        <span class="material-icons" matTooltip="In Complete" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
+                        <a class="cursor-pointer edit-icon"  matTooltip="Edit" routerLink="/tasks/edit/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
+                        <span class="material-icons" matTooltip="Delete" id="delete" (click)="removeTask(task)">delete_outline</span>
                     </div>
                     <div class="content">
                         <p [class.mb-5]="task.description?.length" class="text-truncate-2">{{task.title}}</p>
@@ -51,10 +51,10 @@
             <mat-card *ngFor="let task of inCompleteTasks; let index = index">
                 <div class="d-flex align-items-center">
                     <div class="actions d-flex incomplete">
-                        <span class="material-icons" id="check" (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
-                        <span class="material-icons border-red color-red" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
-                        <a class="cursor-pointer edit-icon" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
-                        <span class="material-icons" id="delete" (click)="removeTask(task)">delete_outline</span>
+                        <span class="material-icons"  matTooltip="Complete" id="check" (click)="updateTaskStatus(task, taskStatus.Complete)">check</span>
+                        <span class="material-icons border-red color-red" matTooltip="In Complete" id="clear" (click)="updateTaskStatus(task, taskStatus.InComplete)">clear</span>
+                        <a class="cursor-pointer edit-icon" matTooltip="Edit" routerLink="/edit/task/{{task.identifier}}"><span class="material-icons" id="edit" >edit</span></a>
+                        <span class="material-icons" matTooltip="Delete" id="delete" (click)="removeTask(task)">delete_outline</span>
                     </div>
                     <div class="content">
                         <p [class.mb-5]="task.description?.length" class="text-truncate-2" [title]="task.title">{{task.title}}</p>

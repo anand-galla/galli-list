@@ -10,13 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import * as sharedComponents from './components';
-import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [...sharedComponents.components],
@@ -34,11 +30,8 @@ import { environment } from '../../environments/environment';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    MatTooltipModule,
     RouterModule,
-    AngularFireModule,
-    AngularFirestoreModule,
-    AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
 })
 export class SharedModule { }
