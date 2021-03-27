@@ -1,8 +1,8 @@
-<div [ngClass]="{ 'main-container p-40': task }">
+<div  *ngIf="taskForm" [ngClass]="{ 'main-container p-40': task }">
     <div class="create-task-container" [class.mv-40]="task">
         <h2 class="title" *ngIf="!task">CREATE NEW TASK</h2>
         <h2 class="title" *ngIf="task">EDIT TASK</h2>
-        <mat-card class="p-40" *ngIf="taskForm">
+        <mat-card class="p-40">
             <div [formGroup]="taskForm">
                 <div class="row d-flex align-items-center">
                     <div class="col-md-6">

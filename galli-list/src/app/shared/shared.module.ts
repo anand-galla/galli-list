@@ -11,7 +11,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import * as sharedComponents from './components';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [...sharedComponents.components],
@@ -30,6 +35,10 @@ import * as sharedComponents from './components';
     MatNativeDateModule,
     MatIconModule,
     RouterModule,
+    AngularFireModule,
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
 })
 export class SharedModule { }

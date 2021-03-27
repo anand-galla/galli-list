@@ -20,8 +20,8 @@ export class CreateTaskComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {
     this.activatedRoute.params.subscribe(params => {
-      if (params['id']) {
-        const identifier = params['id'];
+      if (params['taskId']) {
+        const identifier = params['taskId'];
         this.getTask(identifier);
       } else {
         this.buildTaskForm();
@@ -35,7 +35,7 @@ export class CreateTaskComponent implements OnInit {
   buildTaskForm(task?: models.Task) {
     this.taskForm = new FormGroup({
       title: new FormControl(task?.title || '', Validators.required),
-      date: new FormControl(task?.date || '', Validators.required),
+      date: new FormControl(task?.date || new Date(), Validators.required),
       description: new FormControl(task?.description || ''),
     });
   }

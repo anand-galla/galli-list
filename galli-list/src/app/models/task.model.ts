@@ -8,6 +8,7 @@ export class Task {
     status: TaskStatus;
     identifier: string;
     uid: string;
+    taskListId: string;
 
     constructor(args?: Partial<Task>) {
         Object.assign(this, args);

@@ -1,0 +1,21 @@
+<div class="main-container p-40">
+    <div class="create-task-container mv-20">
+        <h2 class="title">CREATE NEW LIST</h2>
+        <mat-card class="p-40">
+            <div [formGroup]="taskListForm">
+                <div class="row d-flex">
+                    <div class="col-md-12">
+                        <mat-label class="label">Title</mat-label>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <input matInput placeholder="e.g. Life" formControlName="title" autocomplete="off">
+                        </mat-form-field>
+                    </div>           
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <button type="button" class="btn" (click)="createTaskList()">CREATE LIST</button>
+            </div>
+        </mat-card>
+    </div>
+</div>

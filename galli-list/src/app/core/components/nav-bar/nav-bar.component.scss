@@ -38,5 +38,13 @@
     text-decoration: none;
 }
 
+.material-icons {
+    margin: 0 5px;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
 
-
+.active {
+   a { color: green; }
+}
