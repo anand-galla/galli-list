@@ -15,24 +15,13 @@ export class NavBarComponent implements OnInit {
 
   isUserLoggedIn: boolean;
   taskLists$: Observable<models.TaskList[]>;
-  taskListIdentifier: string;
+  activeListIdentifier: string;
 
   constructor(private authService: services.AuthenticationService,
     private taskListService: services.TaskListService,
     private snackBarService: sharedServices.SnackBarService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
   ) {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params['taskListId']) {
-        this.taskListIdentifier = params['taskListId'];
-      } else {
-        this.taskListIdentifier = '';
-      }
-
-      console.log(this.taskListIdentifier);
-      this.taskListService.taskListIdentifier = this.taskListIdentifier;
-    });
    }
 
   ngOnInit(): void {
@@ -40,17 +29,19 @@ export class NavBarComponent implements OnInit {
       this.isUserLoggedIn = !!data;
     });
 
-    this.getTaskLists();
-  }
-
-  getTaskLists() {
     this.taskLists$ = this.taskListService.getTaskLists();
+    this.taskListService.taskListIdentifier.subscribe((data) => this.activeListIdentifier = data);
   }
 
   removeTaskList(identifier: string) {
-    this.taskListService.removeTaskList(identifier).then(() => {
-      this.snackBarService.show('Removed task list', 'Delete', 2000);
-    }).catch((error) => console.log(error));
+    if (confirm('Are you sure you want to delete the selected list?')) {
+      this.taskListService.removeTaskList(identifier).then(() => {
+        if (this.activeListIdentifier === identifier) {
+          this.router.navigate(['/tasks']); 
+        }
+        this.snackBarService.show('Removed task list', 'Delete', 2000);
+      }).catch((error) => console.log(error));
+    }    
   }
 
   singOut() {

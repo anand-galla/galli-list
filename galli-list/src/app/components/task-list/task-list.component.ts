@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import * as models from '../../models';
@@ -11,6 +11,8 @@ import * as sharedServices from '../../shared/services';
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit, OnDestroy {
+  @Input() taskListIdentifier: string;
+  
   tasks: models.Task[];
 
   toDoTasks: models.Task[];
@@ -25,11 +27,16 @@ export class TaskListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getTasks();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.taskListIdentifier) {
+      this.getTasks();
+    }
   }
 
   getTasks() {
-    this.taskSubscription = this.taskService.getTasks().subscribe((data) => {
+    this.taskSubscription = this.taskService.getTasks(this.taskListIdentifier).subscribe((data) => {
       this.tasks = data?.map(d => new models.Task(d));
       this.filterTasks(data);
     });

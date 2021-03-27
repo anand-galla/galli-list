@@ -7,13 +7,14 @@ import * as sharedServices from '../shared/services';
 
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskListService {
   private taskListName = 'taskList';
-  public taskListIdentifier: string;
+  public taskListIdentifier = new BehaviorSubject<string>('');
 
   constructor(private fireService: AngularFirestore, 
     private authService: AuthenticationService,
@@ -29,18 +30,22 @@ export class TaskListService {
     list.uid = this.authService.userId;
     Object.assign(list, { dateCreated: new Date() });
 
-    console.log(list);
     return this.fireService.collection(this.taskListName).add({ ...list });
   }
 
   getTaskLists() {
     return this.fireService.collection(this.taskListName).snapshotChanges().pipe(map(changes => {
-      changes = changes.filter(change => (change.payload.doc.data() as any).uid === this.authService.userId)
-      return changes.map(item => this.utilityService.processFirestoreObject(item.payload.doc));
+      changes = changes.filter(change => {
+        const data = (change.payload.doc.data() as any);
+        return !data.isDeleted && data.uid === this.authService.userId;
+      });
+      
+      changes = changes.map(item => this.utilityService.processFirestoreObject(item.payload.doc));
+      return changes.sort((a : any, b: any) => a.dateCreated - b.dateCreated) as any[];
     }));
   }
 
   removeTaskList(identifier: string) {
-    return this.fireService.collection(this.taskListName).doc(identifier).delete();
+    return this.fireService.collection(this.taskListName).doc(identifier).update({ isDeleted: true });
   }
 }

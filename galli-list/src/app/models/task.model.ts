@@ -9,6 +9,7 @@ export class Task {
     identifier: string;
     uid: string;
     taskListId: string;
+    isDeleted: boolean;
 
     constructor(args?: Partial<Task>) {
         Object.assign(this, args);

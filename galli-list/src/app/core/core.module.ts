@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 import * as coreComponents from './components';
 
@@ -8,6 +9,7 @@ import * as coreComponents from './components';
   imports: [
     CommonModule,
     RouterModule,
+    MatIconModule,
   ],
   declarations: [...coreComponents.components],
   exports: [ coreComponents.NavBarComponent],

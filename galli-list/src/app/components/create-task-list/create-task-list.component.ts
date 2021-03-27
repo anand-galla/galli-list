@@ -17,6 +17,7 @@ export class CreateTaskListComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.taskListService.taskListIdentifier.next(undefined);
   }
 
   buildForm() {

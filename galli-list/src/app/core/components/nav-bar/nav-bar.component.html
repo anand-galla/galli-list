@@ -4,10 +4,16 @@
     </div>
     <ng-container *ngIf="isUserLoggedIn">
         <div class="middle-section" *ngIf="taskLists$ | async as taskLists">
-            <div [class.active]="!taskListIdentifier"><a class="" routerLink="/tasks">All</a></div>
-            <div class="d-flex align-items-center justify-content-between" *ngFor="let list of taskLists" [class.active]="list.identifier === taskListIdentifier">
+            <div class="mv-15" [class.active]="activeListIdentifier == ''"><a class="" routerLink="/tasks">All</a></div>
+            <div class="d-flex align-items-center justify-content-between mv-15" *ngFor="let list of taskLists" [class.active]="list.identifier === activeListIdentifier">
                 <a routerLink="/lists/{{list.identifier}}">{{list.title}}</a>
-                <span class="material-icons" (click)="removeTaskList(list.identifier)">delete</span>
+                <mat-icon class="delete-icon" (click)="removeTaskList(list.identifier)">delete</mat-icon>
+            </div>
+            <div class="mt-30" [class.active]="activeListIdentifier == undefined">
+                <a routerLink="/new-list" class="d-flex align-items-center">
+                    <span class="material-icons m">add</span>
+                    <p class="ml-10 mb-0">Create New List</p>
+                </a>                
             </div>
         </div>
         <div class="bottom-section d-flex flex-column">

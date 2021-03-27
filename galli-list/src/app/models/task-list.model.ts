@@ -4,7 +4,7 @@ export class TaskList {
     id: number;
     identifier: string;
     title: string;
-
+    isDeleted: boolean;
     uid: string;
     tasks: Task[];
 

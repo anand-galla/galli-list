@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,6 +12,8 @@ import * as sharedServices from '../../shared/services';
   styleUrls: ['./create-task.component.scss']
 })
 export class CreateTaskComponent implements OnInit {
+  @Input() taskListIdentifier: string;
+
   taskForm: FormGroup;
   task: models.Task;
 
@@ -42,7 +44,6 @@ export class CreateTaskComponent implements OnInit {
 
   getTask(identifier: string) {
     this.taskService.getTask(identifier).subscribe((data) => {
-      console.log(data);
       this.task = data;
       this.buildTaskForm(data);
     });
@@ -52,8 +53,9 @@ export class CreateTaskComponent implements OnInit {
     if (this.taskForm.valid) {
       const formValue = this.taskForm.value;
       const task = new models.Task(formValue);
+      task.taskListId = this.taskListIdentifier;
 
-      this.taskService.createTask(task).then((res) => {
+      this.taskService.createTask(task).then(() => {
         this.buildTaskForm();
         this.snackBarService.show('Task created', 'Create', 2000);
       }).catch((error) => {

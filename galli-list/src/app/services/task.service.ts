@@ -21,10 +21,8 @@ export class TaskService {
 
   createTask(task: models.Task) {
     task.uid = this.authService.userId;
-    Object.assign(task, {
-      'dateCreated': new Date(),            
-    });
-    
+    Object.assign(task, { dateCreated: new Date() });
+
     return this.fireService.collection(this.collectionName).add({...task});
   }
 
@@ -36,25 +34,26 @@ export class TaskService {
               .pipe(map(item => this.utilityService.processFirestoreObject(item.payload)));
   }
 
-  getTasks() {
+  getTasks(listIdentifier: string) {
     return this.fireService
               .collection(this.collectionName)
               .snapshotChanges()
               .pipe(map(changes => {
-                changes = changes.filter(change => (change.payload.doc.data() as any).uid === this.authService.userId)
+                changes = changes.filter(change => {
+                  const data = (change.payload.doc.data() as any);
+                  return !data.isDeleted && data.uid === this.authService.userId && (!listIdentifier || data.taskListId === listIdentifier);
+                });
+
                 return changes.map(item => this.utilityService.processFirestoreObject(item.payload.doc));
               }));
   }
 
-  updateTask(identifier: string, task: models.Task) {
-    Object.assign(task, {
-      'dateUpdated': new Date(),            
-    });
-
-    return this.fireService.collection(this.collectionName).doc(identifier).update(task);
+  updateTask(identifier: string, { title, date, description }: models.Task) {
+    const dateUpdated = new Date();
+    return this.fireService.collection(this.collectionName).doc(identifier).update({ title, date, description, dateUpdated });
   }
 
   removeTask(identifier: string) {
-    return this.fireService.collection(this.collectionName).doc(identifier).delete();
+    return this.fireService.collection(this.collectionName).doc(identifier).update({ isDeleted: true });
   }
 }
