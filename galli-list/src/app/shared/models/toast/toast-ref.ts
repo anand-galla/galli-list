@@ -1,32 +1,27 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 
 export class ToastRef {
-    constructor(readonly overlay: OverlayRef) { }
-  
-    close() {
+  componentType: string;
+
+  constructor(private readonly overlay: OverlayRef, 
+      private type?: string,
+  ) {
+      this.componentType = type;
+  }
+
+  close() {
       this.overlay.dispose();
-    }
+  }
+
+  isVisible() {
+      return this.overlay && this.overlay.overlayElement;
+  }
+
+  getPosition() {
+      return this.overlay.overlayElement.getBoundingClientRect();
+  }
+
+  updatePosition(positionStrategy: any) {
+      this.overlay.updatePositionStrategy(positionStrategy);
+  }
 }
-
-// export class ToastRef {
-
-//     constructor(private overlay: OverlayRef) { }
-
-    
-
-//     close() {
-//         this.overlay.dispose();
-//     }
-
-//     isVisible() {
-//         return this.overlay && this.overlay.overlayElement;
-//     }
-
-//     getPosition() {
-//         return this.overlay.overlayElement.getBoundingClientRect();
-//     }
-
-//     updatePosition(positionStrategy: any) {
-//         this.overlay.updatePositionStrategy(positionStrategy);
-//     }
-// }

@@ -13,7 +13,7 @@ export class CreateTaskListComponent implements OnInit {
 
   taskListForm: FormGroup;
 
-  constructor(private taskListService: services.TaskListService, private snackBarService: sharedServices.SnackBarService) { }
+  constructor(private taskListService: services.TaskListService, private notificationService: sharedServices.NotificationService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -30,11 +30,11 @@ export class CreateTaskListComponent implements OnInit {
     if (this.taskListForm.valid) {
       this.taskListService.createTaskList(this.taskListForm.value).then((res) => {
         this.buildForm();
-        this.snackBarService.show('New list created', 'Create', 2000);
-      });
+        this.notificationService.show({ type: 'success', message: 'Task updated successfully.' });
+      }).catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
     } else {
       this.taskListForm.markAllAsTouched();
+      this.notificationService.show({ type: 'warning', message: 'Please fill all the required fields.' });
     }
   }
-
 }

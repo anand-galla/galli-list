@@ -15,7 +15,7 @@ export class SingupComponent implements OnInit {
   singUpForm: FormGroup;
 
   constructor(private authenticationService: services.AuthenticationService,
-    private snackBarService: sharedServices.SnackBarService,
+    private notificationService: sharedServices.NotificationService,
     private router: Router,
   ) { }
 
@@ -43,10 +43,11 @@ export class SingupComponent implements OnInit {
 
       this.authenticationService.singUp(user, formValue.password).then((res) => {
         this.router.navigate(['/tasks']);
-        this.snackBarService.show('New user created', 'User', 2000);
-      }, (error) => console.log(error));
+        this.notificationService.show({ type: 'success', message: 'Account created successfully.' });
+      }, (error) => this.notificationService.show({ type: 'error', message: error.message }));
     } else {
       this.singUpForm.markAllAsTouched();
+      this.notificationService.show({ type: 'warning', message: 'Please fill all the required fields.' });
     }
   }
 }

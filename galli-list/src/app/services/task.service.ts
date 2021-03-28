@@ -49,9 +49,14 @@ export class TaskService {
               }));
   }
 
-  updateTask(identifier: string, { title, date, description, status }: models.Task) {
+  updateTask(identifier: string, { title, date, description }: models.Task) {
     const dateUpdated = new Date();
-    return this.fireService.collection(this.collectionName).doc(identifier).update({ title, date, description, status, dateUpdated });
+    return this.fireService.collection(this.collectionName).doc(identifier).update({ title, date, description, dateUpdated });
+  }
+
+  updateTaskStatus(identifier: string, { status }: models.Task) {
+    const dateUpdated = new Date();
+    return this.fireService.collection(this.collectionName).doc(identifier).update({ status, dateUpdated });
   }
 
   removeTask(identifier: string) {

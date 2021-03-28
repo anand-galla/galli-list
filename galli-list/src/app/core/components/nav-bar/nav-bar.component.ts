@@ -19,7 +19,7 @@ export class NavBarComponent implements OnInit {
 
   constructor(private authService: services.AuthenticationService,
     private taskListService: services.TaskListService,
-    private snackBarService: sharedServices.SnackBarService,
+    private notificationService: sharedServices.NotificationService,
     private router: Router,
   ) {
    }
@@ -39,12 +39,13 @@ export class NavBarComponent implements OnInit {
         if (this.activeListIdentifier === identifier) {
           this.router.navigate(['/tasks']); 
         }
-        this.snackBarService.show('Removed task list', 'Delete', 2000);
-      }).catch((error) => console.log(error));
+        
+        this.notificationService.show({ type: 'success', message: 'Removed task list successfully.' })
+      }).catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
     }    
   }
 
   singOut() {
-    this.authService.signOut().then(() => this.router.navigate(['/login'])).catch((error) => console.log(error));
+    this.authService.signOut().then(() => this.router.navigate(['/login'])).catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
   }
 }

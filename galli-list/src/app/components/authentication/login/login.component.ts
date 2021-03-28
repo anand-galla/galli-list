@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import * as services from '../../../services';
+import * as sharedServices from '../../../shared/services';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   logInForm: FormGroup;
 
   constructor(private authenticationService: services.AuthenticationService,
+    private notificationService: sharedServices.NotificationService,
     private router: Router,
   ) { }
 
@@ -31,6 +33,6 @@ export class LoginComponent implements OnInit {
   logIn() {
     this.authenticationService.signIn(this.logInForm.value.email, this.logInForm.value.password).then(() => {
       this.router.navigate(['../']);
-    });
+    }).catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
   }
 }

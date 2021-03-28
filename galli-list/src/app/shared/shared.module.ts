@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +20,7 @@ import * as sharedComponents from './components';
   imports: [
     CommonModule,
     OverlayModule,
+    BrowserAnimationsModule,
   ],
   exports: [
     ...sharedComponents.components,

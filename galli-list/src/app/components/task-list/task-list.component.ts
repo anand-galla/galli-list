@@ -23,7 +23,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   taskSubscription: Subscription;
 
   constructor(private taskService: services.TaskService,
-    private snackBarService: sharedServices.SnackBarService,
+    private notificationService: sharedServices.NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -51,16 +51,16 @@ export class TaskListComponent implements OnInit, OnDestroy {
   updateTaskStatus(task: models.Task, status: models.TaskStatus) {
     if (task.status !== status) {
       task.status = status;
-      this.taskService.updateTask(task.identifier, task).then((data) => this.snackBarService.show('Status updated', 'Update', 2000))
-            .catch((error) => console.log(error));
-    }    
+      this.taskService.updateTaskStatus(task.identifier, task).then(() => this.notificationService.show({ type: 'success', message: 'Status updated successfully.' }))
+            .catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
+    }   
   }
 
   removeTask(task: models.Task) {
     if (confirm('Are you sure you want to delete the task?')) {
-      this.taskService.removeTask(task.identifier).then(() => this.snackBarService.show('Task removed', 'Delete', 2000))
-          .catch((error) => console.log(error));
-    }    
+      this.taskService.removeTask(task.identifier).then(() => this.notificationService.show({ type: 'success', message: 'Task removed successfully.' }))
+          .catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
+    }
   }
 
   ngOnDestroy() {

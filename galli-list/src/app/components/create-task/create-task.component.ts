@@ -18,7 +18,7 @@ export class CreateTaskComponent implements OnInit {
   task: models.Task;
 
   constructor(private taskService: services.TaskService,
-    private snackBarService: sharedServices.SnackBarService,
+    private notificationService: sharedServices.NotificationService,
     private activatedRoute: ActivatedRoute,
   ) {
     this.activatedRoute.params.subscribe(params => {
@@ -57,12 +57,11 @@ export class CreateTaskComponent implements OnInit {
 
       this.taskService.createTask(task).then(() => {
         this.buildTaskForm();
-        this.snackBarService.show('Task created', 'Create', 2000);
-      }).catch((error) => {
-        console.log(error);
-      });
+        this.notificationService.show({ type: 'success', message: 'Task created successfully.' });
+      }).catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
     } else {
       this.taskForm.markAllAsTouched();
+      this.notificationService.show({ type: 'warning', message: 'Please fill all the required fields.' });
     }
   }
 
@@ -74,11 +73,11 @@ export class CreateTaskComponent implements OnInit {
       this.task.date = formValue.date;
 
       this.taskService.updateTask(this.task.identifier, formValue).then((data) => {
-        console.log(data);
-        this.snackBarService.show('Task updated', 'Update', 2000);
-      }).catch((error) => console.log(error));
+        this.notificationService.show({ type: 'success', message: 'Task updated successfully.' });
+      }).catch((error) => this.notificationService.show({ type: 'error', message: error.message }));
     } else {
       this.taskForm.markAllAsTouched();
+      this.notificationService.show({ type: 'warning', message: 'Please fill all the required fields.' });
     }
   }
 }

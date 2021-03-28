@@ -5,7 +5,8 @@ import * as models from '../../models';
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
-  styleUrls: ['./toast.component.scss']
+  styleUrls: ['./toast.component.scss'],
+  animations: [models.toastAnimations.fadeToast],
 })
 export class ToastComponent implements OnInit, OnDestroy {
   animationState: models.ToastAnimationState;
@@ -24,7 +25,7 @@ export class ToastComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // setting default time to show toast is 10 seconds.
-    this.intervalId = setTimeout(() => this.animationState = 'closing', this.toastData.duration || 10000);
+    this.intervalId = setTimeout(() => this.animationState = 'closing', this.toastData.duration || 5000);
   }
 
   ngOnDestroy() {

@@ -22,7 +22,6 @@ export class NotificationService {
     // It create a container in our application that will host our toast message.
     const overlayRef = this._overlayService.create({ positionStrategy: positionStrategy, disposeOnNavigation: true }); 
 
-    data = new ToastData(data);
     const toastRef = new ToastRef(overlayRef);
 
     // Creating an Custom injector to pass data into component.
@@ -31,7 +30,7 @@ export class NotificationService {
     const toastPortal = new ComponentPortal(ToastComponent, null, injector); // It create an instance of our component.
     overlayRef.attach(toastPortal); // Attaching component to overlay container.
   
-    // this.toastsList.push(toastRef);
+    this.toastsList.push(toastRef);
 
     return toastRef;
   }
@@ -48,11 +47,11 @@ export class NotificationService {
   /**
    * This method configures the position of the toast where we want to show.
    */
-  getPositionStrategy(value?: string) {
+   getPositionStrategy(value?: string) {
     return this._overlayService
               .position()
               .global()
-              .top(value)
+              .top(value || this.getPosition())
               .right('20px');
   }
 
@@ -60,10 +59,10 @@ export class NotificationService {
    * In order to stack the toast messages below each other
    * this method returns position of last toast.
    */
-  // getPosition() {
-  //   const lastActiveToast = this.toastsList?.filter(toast => toast.isVisible())?.pop(); // Finding last active toast.
-  //   const position = lastActiveToast ? lastActiveToast?.getPosition().bottom : 20;
+  getPosition() {
+    const lastActiveToast = this.toastsList?.filter(toast => toast.isVisible())?.pop(); // Finding last active toast.
+    const position = lastActiveToast ? lastActiveToast?.getPosition().bottom : 20;
 
-  //   return position + 'px';
-  // }
+    return position + 'px';
+  }
 }
