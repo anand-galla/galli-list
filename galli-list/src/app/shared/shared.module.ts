@@ -12,6 +12,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import * as sharedComponents from './components';
 
@@ -21,6 +25,10 @@ import * as sharedComponents from './components';
     CommonModule,
     OverlayModule,
     BrowserAnimationsModule,
+    MatMenuModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
   ],
   exports: [
     ...sharedComponents.components,
@@ -34,6 +42,10 @@ import * as sharedComponents from './components';
     MatIconModule,
     MatTooltipModule,
     RouterModule,
+    MatMenuModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
   ],
 })
 export class SharedModule { }

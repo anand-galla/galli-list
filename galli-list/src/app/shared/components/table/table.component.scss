@@ -1,0 +1,40 @@
+.ellipsis-icon {
+    width: 25px !important;
+}
+
+.primary-actions {
+
+    button {
+        width: 28px;
+        .icon {
+            font-size: 16px;
+        }
+    }
+
+    .action {
+        cursor: pointer;
+        
+        .icon {
+            margin-right: 8px;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        span {
+            font-size: 14px;
+            line-height: 17px;
+        }
+    }
+}
+
+.sort-config {
+    .title {
+        margin: 0 15px 8px;
+        font-weight: 500;
+    }
+}
+
+.column-dropdown {
+    margin-left: 20px;
+    width: 60%;
+}

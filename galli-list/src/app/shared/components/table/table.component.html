@@ -1,0 +1,72 @@
+<div class="d-flex align-items-center justify-content-between mt-20">
+    <div class="total-results">Total Results:<span>{{totalRecords || 0}}</span></div>
+</div>
+<div class="table-container" [hidden]="!tableConfig && !sort">
+    <table [class.table-max-content]="data?.length" mat-table [dataSource]="dataSource" matSort [matSortActive]="sort.active" [matSortDirection]="sort.direction" matSortDisableClear>
+
+        <ng-container [matColumnDef]="column.columnDef" [sticky]="column.sticky" *ngFor="let column of columns; trackBy: trackByIdentifier" >
+            <ng-container *ngIf="!column.disableSort && !tableConfig.disableSort; else noSort">
+                <th [style.width]="column._width + '%'" mat-header-cell *matHeaderCellDef mat-sort-header="{{column.matSortHeaderName}}">{{ column.header?.toUpperCase() }}</th>
+            </ng-container>
+            
+            <ng-template #noSort>
+                <th [style.width]="column._width + '%'" mat-header-cell *matHeaderCellDef>{{ column.header?.toUpperCase() }}</th>
+            </ng-template>
+    
+            <ng-container *ngIf="!column.isItActionColumn">
+                <td mat-cell *matCellDef="let row" [class.column-sticky]="column.sticky">
+                    <span [innerHTML]="getCellData(column, row)" *ngIf="!column.noOfCharactersToShow"></span>
+                    <span [innerHTML]="getCellData(column, row)?.substring(0, column.noOfCharactersToShow)" *ngIf="column.noOfCharactersToShow"></span>
+
+                    <button mat-icon-button *ngIf="getCellData(column, row)?.length > column.noOfCharactersToShow" 
+                        [matMenuTriggerFor]="menu"
+                        class="w-10"
+                        #passageMenuTrigger="matMenuTrigger">
+                        ...
+                    </button>
+
+                    <mat-menu #menu="matMenu" direction="down" yPosition="below" hasBackdrop="true"
+                        [overlapTrigger]="true" class="mx-height-60p">
+                        <div class="mat-menu-padding">
+                            <span>{{getCellData(column, row)}}</span>
+                         </div>
+                    </mat-menu>
+                </td>               
+            </ng-container>
+
+            <ng-container *ngIf="column.isItActionColumn">
+                <td mat-cell *matCellDef="let row">
+                    <ng-container *ngIf="tableConfig._actionIcons(row).length <= 3">
+                        <ng-container *ngFor="let actionIcon of tableConfig._actionIcons(row); trackBy: trackByIdentifier">
+                            <i class="mr-10" role="button" [class]="actionIcon.class" [title]="actionIcon.title || actionIcon.name" (click)="actionClicked(actionIcon, row)"></i>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="tableConfig._actionIcons(row).length > 3">
+                        <ng-container *ngFor="let actionIcon of tableConfig._actionIcons(row).slice(0, 2); let isFirst = first; trackBy: trackByIdentifier">
+                            <i [class.mr-10]="isFirst" role="button" [class]="actionIcon.class" [title]="actionIcon.title || actionIcon.name" (click)="actionClicked(actionIcon, row)"></i>
+                        </ng-container>
+                        <button mat-icon-button class="ellipsis-icon" [matMenuTriggerFor]="menu" title="Additional Actions">
+                            <i class="fal fa-ellipsis-v delete-menu-icon "></i>
+                         </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item *ngFor="let actionIcon of tableConfig._actionIcons(row).slice(2, tableConfig._actionIcons(row).length); trackBy: trackByIdentifier" (click)="actionClicked(actionIcon, row)">
+                                <i class="mr-10" [class]="actionIcon.class"></i>
+                                <span>{{actionIcon.name}}</span>
+                            </button>
+                        </mat-menu>
+                    </ng-container>
+                  </td>
+            </ng-container>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="tableConfig._displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableConfig._displayedColumns;"></tr>
+    </table>
+    
+    <mat-paginator [hidden]="tableConfig.disablePagination"
+        [length]="totalRecords" 
+        [pageSize]="tableConfig.pageSize"
+        [pageSizeOptions]="tableConfig._pageSizeOptions" 
+        showFirstLastButtons>
+    </mat-paginator>
+</div>
